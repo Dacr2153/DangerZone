@@ -1,0 +1,16 @@
+[package]
+name = "dz-output"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Reconstructs a safe PDF from raw page pixel buffers"
+
+[lints]
+workspace = true
+
+[dependencies]
+dz-core = { workspace = true }
+flate2 = { workspace = true }
+log = { workspace = true }
+lopdf = { workspace = true }
+thiserror = { workspace = true }
