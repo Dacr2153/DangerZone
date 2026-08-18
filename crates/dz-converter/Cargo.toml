@@ -1,0 +1,31 @@
+[package]
+name = "dz-converter"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Conversion protocol shared between the Dangerzone client and sandbox"
+
+[lints]
+workspace = true
+
+[features]
+default = []
+sandbox = ["dep:pdfium-render", "dep:image", "dep:infer", "dep:tempfile", "dep:resvg", "dep:zip"]
+
+[dependencies]
+image = { workspace = true, optional = true }
+infer = { workspace = true, optional = true }
+log = { workspace = true }
+pdfium-render = { workspace = true, optional = true }
+resvg = { workspace = true, optional = true }
+tempfile = { workspace = true, optional = true }
+thiserror = { workspace = true }
+zip = { workspace = true, optional = true }
+
+[dev-dependencies]
+dz-output = { workspace = true }
+
+[[bin]]
+name = "dz-convert"
+path = "src/main.rs"
+required-features = ["sandbox"]
