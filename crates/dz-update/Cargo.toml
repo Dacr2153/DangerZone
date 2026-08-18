@@ -1,0 +1,30 @@
+[package]
+name = "dz-update"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Signed update mechanism for the Dangerzone application and sandbox image"
+
+[lints]
+workspace = true
+
+[dependencies]
+clap = { workspace = true }
+base64 = { workspace = true }
+dz-core = { workspace = true }
+dz-runtime = { workspace = true }
+env_logger = { workspace = true }
+log = { workspace = true }
+regex = { workspace = true }
+semver = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+sha2 = { workspace = true }
+tar = { workspace = true }
+tempfile = { workspace = true }
+thiserror = { workspace = true }
+ureq = { workspace = true }
+
+[[bin]]
+name = "dz-update-image"
+path = "src/bin/dz-update-image.rs"
