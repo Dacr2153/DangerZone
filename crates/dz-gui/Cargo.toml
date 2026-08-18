@@ -1,0 +1,15 @@
+[package]
+name = "dz-gui"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+description = "Dangerzone GUI built with eframe."
+
+[dependencies]
+dz-core = { path = "../dz-core" }
+dz-runtime = { path = "../dz-runtime" }
+dz-update = { path = "../dz-update" }
+eframe = "0.28"
+egui = "0.28"
+image = { workspace = true }
+rfd = "0.11"
