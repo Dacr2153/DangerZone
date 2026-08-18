@@ -1,0 +1,61 @@
+# syntax=docker/dockerfile:1
+#
+# Self-contained, offline runtime image for the Dangerzone conversion sandbox.
+#
+# NOTE: the binary is linked against glibc on purpose. A musl-static build
+# cannot `dlopen()` the pinned `libpdfium.so` (bblanchon/pdfium-binaries builds
+# are glibc), so both the builder and the runtime use glibc.
+#
+# Build context: the repository root. Run `scripts/build-image.sh` which stages
+# the pinned PDFium library and passes its path via the PDFIUM_SO build arg.
+
+# --- Builder stage -----------------------------------------------------------
+FROM rust:bookworm AS builder
+WORKDIR /src
+COPY . .
+RUN cargo build --release --locked --features dz-converter/sandbox --bin dz-convert
+
+# --- Runtime stage -----------------------------------------------------------
+FROM debian:bookworm-slim AS runtime
+
+# LibreOffice is used to convert office documents to an intermediate PDF,
+# Calibre's `ebook-convert` converts EPUB ebooks, and Tesseract turns the
+# rasterized pages into searchable PDFs when OCR is requested. The
+# `tesseract-ocr-*` packages install the trained language data that
+# `--ocr-lang` maps to.
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        calibre \
+        libreoffice \
+        fonts-liberation \
+        fonts-dejavu \
+        tesseract-ocr \
+        tesseract-ocr-eng \
+        tesseract-ocr-deu \
+        tesseract-ocr-fra \
+        tesseract-ocr-spa \
+        tesseract-ocr-por \
+        tesseract-ocr-ita \
+        tesseract-ocr-nld \
+        tesseract-ocr-rus \
+        tesseract-ocr-ces \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN useradd --create-home --uid 1000 --shell /usr/sbin/nologin dangerzone
+
+COPY --from=builder /src/target/release/dz-convert /opt/dangerzone/dz-convert
+ARG PDFIUM_SO
+COPY "${PDFIUM_SO}" /opt/dangerzone/lib/libpdfium.so
+COPY sandbox/policies/seccomp.json /opt/dangerzone/seccomp.json
+COPY sandbox/policies/apparmor.profile /opt/dangerzone/apparmor.profile
+
+# The conversion binary loads the pinned PDFium library at runtime.
+ENV LD_LIBRARY_PATH=/opt/dangerzone/lib
+
+# Tesseract is single-threaded per page: the sandbox OCRs one page at a time,
+# so extra Tesseract worker threads would only waste CPU. This mirrors the
+# `_ocr_pool_initializer` environment of the original code.
+ENV OMP_THREAD_LIMIT=1 OMP_NUM_THREADS=1
+
+USER dangerzone
+WORKDIR /home/dangerzone
