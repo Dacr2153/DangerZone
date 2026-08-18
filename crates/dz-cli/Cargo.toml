@@ -1,0 +1,21 @@
+[package]
+name = "dz-cli"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Command-line interface for converting documents to safe PDFs"
+
+[lints]
+workspace = true
+
+[dependencies]
+clap = { workspace = true }
+dz-core = { workspace = true }
+dz-runtime = { workspace = true }
+dz-update = { workspace = true }
+env_logger = { workspace = true }
+log = { workspace = true }
+
+[[bin]]
+name = "dz-dangerzone"
+path = "src/main.rs"
