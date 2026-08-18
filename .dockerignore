@@ -1,0 +1,22 @@
+# Rust build artifacts
+/target
+**/target
+
+# Git and editor artifacts
+/.git
+.git
+**/.git
+*.swp
+*~
+
+# Per-crate Cargo.lock (the workspace lock at the root is required for the build)
+/crates/*/Cargo.lock
+
+# Staged PDFium library is managed by scripts/build-image.sh
+.cache
+
+# Integration / fuzz artifacts
+/tests/integration/tmp
+
+# OS junk
+.DS_Store

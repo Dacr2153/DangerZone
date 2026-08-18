@@ -1,0 +1,57 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/dz-cli",
+    "crates/dz-converter",
+    "crates/dz-core",
+    "crates/dz-output",
+    "crates/dz-runtime",
+    "crates/dz-update",
+    "crates/dz-gui",
+    "tests",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+
+[workspace.dependencies]
+base64 = "0.22"
+clap = { version = "4.6", features = ["derive"] }
+dirs-next = "2"
+dz-converter = { path = "crates/dz-converter" }
+dz-core = { path = "crates/dz-core" }
+dz-output = { path = "crates/dz-output" }
+dz-runtime = { path = "crates/dz-runtime" }
+dz-update = { path = "crates/dz-update" }
+env_logger = "0.11"
+flate2 = "1"
+image = { version = "0.25", default-features = false, features = ["jpeg", "png", "gif", "tiff", "bmp"] }
+infer = "0.22"
+lopdf = "0.34"
+libc = "0.2"
+log = "0.4"
+pdfium-render = { version = "0.9", features = ["thread_safe"] }
+rand = "0.8"
+regex = "1"
+resvg = "0.48"
+semver = "1"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+serde_repr = "0.1"
+sha2 = "0.10"
+tar = "0.4"
+tempfile = "3"
+thiserror = "2"
+unicode-general-category = "1"
+ureq = "2"
+zip = { version = "2", default-features = false }
+
+[workspace.lints.rust]
+missing_docs = "warn"
+rust_2018_idioms = "warn"
+
+[workspace.lints.clippy]
+all = { level = "warn", priority = 10 }
+perf = { level = "warn", priority = 9 }

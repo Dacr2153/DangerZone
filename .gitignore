@@ -1,0 +1,7 @@
+# Rust
+/target
+**/target
+Cargo.lock
+
+# Build-time staging for the sandbox image (see scripts/build-image.sh)
+/.cache
