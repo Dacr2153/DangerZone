@@ -1,0 +1,29 @@
+[package]
+name = "dz-runtime"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Isolation providers that run the Dangerzone document conversion"
+
+[lints]
+workspace = true
+
+[dependencies]
+clap = { workspace = true }
+base64 = { workspace = true }
+dz-converter = { workspace = true }
+dz-core = { workspace = true }
+dz-output = { workspace = true }
+dirs-next = { workspace = true }
+env_logger = { workspace = true }
+libc = { workspace = true }
+log = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+sha2 = { workspace = true }
+tempfile = { workspace = true }
+thiserror = { workspace = true }
+
+[[bin]]
+name = "dz-podman"
+path = "src/bin/dz-podman.rs"
