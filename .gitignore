@@ -13,3 +13,6 @@ Cargo.lock
 
 # Empty-dir placeholders
 **/.keep
+
+# Internal planning doc
+/PlanDangerZone.md
