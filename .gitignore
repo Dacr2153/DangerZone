@@ -5,3 +5,11 @@ Cargo.lock
 
 # Build-time staging for the sandbox image (see scripts/build-image.sh)
 /.cache
+
+# Local agent tooling (opencode skills), not part of the project
+/.agents
+/skills-lock.json
+/.cargo
+
+# Empty-dir placeholders
+**/.keep
