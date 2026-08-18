@@ -1,0 +1,18 @@
+[package]
+name = "dz-tests"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish = false
+description = "End-to-end integration tests for the Dangerzone port"
+
+[lints]
+workspace = true
+
+[dependencies]
+dz-core = { workspace = true }
+dz-output = { workspace = true }
+dz-runtime = { workspace = true }
+
+[dev-dependencies]
+tempfile = { workspace = true }
